@@ -202,10 +202,10 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Window resizing
-vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
-vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
-vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
-vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+vim.keymap.set('n', '=', [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set('n', '-', [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set('n', '+', [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set('n', '_', [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
 -- Open a horizontal split terminal
 vim.keymap.set('n', '<leader>th', ':terminal<CR>', { desc = 'Open Terminal (Horizontal)' })
@@ -218,12 +218,15 @@ vim.keymap.set('n', '<C-t>', ':tabnew<CR>', { desc = 'Open new tab' })
 vim.keymap.set('n', '<Tab>', 'gt', { desc = 'Next tab' })
 vim.keymap.set('n', '<S-Tab>', 'gT', { desc = 'Prev tab' })
 for i = 1, 9 do
-  vim.keymap.set('n', '<M-' .. i .. '>', i .. 'gt', { desc = "Go to tab " .. i })
+  vim.keymap.set('n', '<M-' .. i .. '>', i .. 'gt', { desc = 'Go to tab ' .. i })
 end
 
 -- Saving and Quitting
 vim.keymap.set('n', '<C-q>', ':q<CR>', { desc = 'Quit' })
 vim.keymap.set('n', '<C-s>', ':w<CR>', { desc = 'Save' })
+
+-- Typst Preview
+vim.keymap.set('n', '<leader>tp', ':TypstPreview<CR>', { desc = 'Open Typst Preview' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -697,15 +700,17 @@ require('lazy').setup({
               },
             },
           },
+
+          tinymist = {},
         },
 
-          -- not installed by Mason
+        -- not installed by Mason
         others = {
-          dartls = {}
-          -- dartls = { 
-          --   setup = { 
-          --     cmd = { "dart", "language-server", "--protocol=lsp" }, 
-          --   }, 
+          dartls = {},
+          -- dartls = {
+          --   setup = {
+          --     cmd = { "dart", "language-server", "--protocol=lsp" },
+          --   },
           -- },
         },
       }
@@ -747,18 +752,6 @@ require('lazy').setup({
     end,
   },
 
-  -- Flutter
-  {
-    'nvim-flutter/flutter-tools.nvim',
-    lazy = false,
-    dependencies = {
-        'nvim-lua/plenary.nvim',
-        'stevearc/dressing.nvim', -- optional for vim.ui.select
-    },
-    config = true,
-  },
-
-
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
@@ -791,10 +784,10 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { "ruff" },
-        javascript = { "prettierd" },
-        typescript = { "prettierd" },
-        html = { "prettierd" },
+        python = { 'ruff' },
+        javascript = { 'prettierd' },
+        typescript = { 'prettierd' },
+        html = { 'prettierd' },
       },
     },
   },
@@ -906,12 +899,12 @@ require('lazy').setup({
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'catppuccin/nvim',
-    name = "catppuccin",
+    name = 'catppuccin',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require("catppuccin").setup({
-        flavour = "macchiato", -- latte, frappe, macchiato, mocha
+      require('catppuccin').setup {
+        flavour = 'macchiato', -- latte, frappe, macchiato, mocha
         transparent_background = false,
         integrations = {
           mini = true,
@@ -924,7 +917,7 @@ require('lazy').setup({
           treesitter = true,
           lsp_saga = true,
         },
-      })
+      }
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
@@ -979,24 +972,24 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 
-        'bash', 
-        'c', 
-        'diff', 
-        'html', 
-        'lua', 
-        'luadoc', 
-        'markdown', 
-        'markdown_inline', 
-        'query', 
-        'vim', 
-        'vimdoc', 
-        'python', 
-        'c', 
-        'svelte', 
-        'haskell', 
-        'javascript', 
-        'typescript' ,
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'python',
+        'c',
+        'svelte',
+        'haskell',
+        'javascript',
+        'typescript',
         'dart',
       },
       -- Autoinstall languages that are not installed
